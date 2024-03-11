@@ -25,7 +25,6 @@ contract OutYYMMCrossAdaptor is BridgeAdaptorBase {
         bytes memory _data
     ) external payable override onlyXBridge {
         (int64 _relayerFeePct, uint32  _quoteTimestamp) = abi.decode(_data, (int64, uint32));
-        transferCrossChain(string memory recipient, uint256 amount, uint256 fee, bytes32 target) 
         _token.transferCrossChain(
             addressToString(_to),
             _amount,
