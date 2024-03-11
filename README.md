@@ -17,6 +17,7 @@ bsc跨链桥合约地址：
 
 
 转入 YYMM的接口:
+
 function sendToCosmos(
         address _tokenContract,
         bytes32 _destination,
@@ -24,7 +25,8 @@ function sendToCosmos(
         uint256 _amount
     ) public nonReentrant whenNotPaused
 
-转出 YYMM的接口
+转出 YYMM的接口：
+
 function transferCrossChain(
     string memory recipient, 
     uint256 amount, 
