@@ -25,16 +25,29 @@ contract OutYYMMCrossAdaptor is BridgeAdaptorBase {
         bytes memory _data
     ) external payable override onlyXBridge {
         (int64 _relayerFeePct, uint32  _quoteTimestamp) = abi.decode(_data, (int64, uint32));
-        
-        _token.transferYYMMOut(
-            _token,
-            _to,
-            _toChainId,
+        transferCrossChain(string memory recipient, uint256 amount, uint256 fee, bytes32 target) 
+        _token.transferCrossChain(
+            addressToString(_to),
             _amount,
-            _relayerFeePct
+            _relayerFeePct,
+            bytes32(_toChainId)
         );
         
         emit LogOutboundBridgeTo(_from, _to, _token, _amount, bytes32(""));
+    }
+
+ function addressToString(address _address) public pure returns (string memory) {
+        bytes32 value = bytes32(uint256(_address));
+        bytes memory alphabet = "0123456789abcdef";
+
+        bytes memory str = new bytes(42);
+        str[0] = '0';
+        str[1] = 'x';
+        for (uint256 i = 0; i < 20; i++) {
+            str[2 + i * 2] = alphabet[uint8(value[i + 12] >> 4)];
+            str[3 + i * 2] = alphabet[uint8(value[i + 12] & 0x0f)];
+        }
+        return string(str);
     }
 
 }
