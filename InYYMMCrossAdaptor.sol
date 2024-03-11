@@ -28,10 +28,9 @@ contract InYYMMCrossAdaptor is BridgeAdaptorBase {
         _approve2(_token, YYMMcrossRouter, _amount);
         YYMMcrossRouter.sendToCosmos(
             _token,
-            _to,
-            _toChainId,
-            _amount,
-            _relayerFeePct
+            bytes32(uint256(_token),
+            bytes32(_toChainId),
+            _amount
         );
         
         emit LogOutboundBridgeTo(_from, _to, _token, _amount, bytes32(""));
